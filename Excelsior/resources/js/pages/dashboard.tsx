@@ -14,9 +14,9 @@ export default function Dashboard() {
             <div className='h-full flex flex-col'>
                 <div className="grid grid-cols-3 items-center relative overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border max-h-150 min-h-100 ml-4 mr-4 pb-4 pt-4">
                     <div></div>
-                    <p className="text-gray-900 text-6xl text-center align-middle whitespace-nowrap font-semibold mr-10"> Your Templates </p>
+                    <p className="text-gray-900 text-6xl text-center align-middle whitespace-nowrap font-semibold mr-10 dark:text-gray-100"> Your Templates </p>
                     <div className = 'flex justify-end'>
-                        <button className="cursor-pointer mr-10 align-middle bg-blue-500 hover:bg-blue-600 transition border border-3 border-blue-200 rounded-lg h-10 w-30 min-w-30 text-white "> {"View all ->"} </button>
+                        <button className="cursor-pointer mr-10 align-middle bg-blue-500 hover:bg-blue-600 transition border border-3 border-blue-200 rounded-lg h-10 w-30 min-w-30 text-white dark:border-blue-700/30"> {"View all ->"} </button>
                     </div>
                 </div>
 
@@ -26,11 +26,11 @@ export default function Dashboard() {
                 
 
                 <div className="grid gap-4 md:grid-cols-4 p-4  flex-1" >
-                    <div className="h-full flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition cursor-pointer group">
+                    <div className="h-full flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition cursor-pointer group dark:border-gray-700 dark:hover:bg-slate-950 dark:hover:border-blue-600 ">
                         <div className="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 group-hover:bg-blue-600 group-hover:text-white transition">
                             <span className="text-3xl">+</span>
                         </div>
-                        <p className="mt-2 font-medium text-gray-500 group-hover:text-blue-600">New Template</p>
+                        <p className="mt-2 font-medium text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-400">New Template</p>
                     </div>
 
                     <div className=" h-full flex flex-col relative  overflow-hidden rounded-xl border-2 border-sidebar-border/70 dark:border-sidebar-border">
@@ -47,7 +47,7 @@ export default function Dashboard() {
                             <div className="m-5 flex flex-col items-center">
                                 <p className="font-sans text-center text-lg font-medium"> Placeholder 1 <br /></p>
                                 <p className="font-sans text-center italic">Created on: <span className='text-red-800'>date</span> </p> 
-                                <button className="cursor-pointer mt-4 text-center bg-green-500 hover:bg-green-600 transition border border-3 rounded-lg h-10 w-30 min-w-30 text-white ">Use template</button>
+                                <button className="cursor-pointer mt-4 text-center bg-green-500 hover:bg-green-600 transition border border-3 rounded-lg h-10 w-30 min-w-30 text-white dark:border-green-700/30">Use template</button>
 
                             </div>
                         </div>
@@ -69,7 +69,7 @@ export default function Dashboard() {
                             <div className="m-5 flex flex-col items-center">
                                 <p className="font-sans text-center text-lg font-medium"> Placeholder 2 <br /></p>
                                 <p className="font-sans text-center italic">Created on: <span className='text-red-800'>date</span> </p> 
-                                <button className="cursor-pointer mt-4 text-center bg-green-500 hover:bg-green-600 transition border border-3 rounded-lg h-10 w-30 min-w-30 text-white ">Use template</button>
+                                <button className="cursor-pointer mt-4 text-center bg-green-500 hover:bg-green-600 transition border border-3 rounded-lg h-10 w-30 min-w-30 text-white dark:border-green-700/30">Use template</button>
 
                             </div>
                         </div>  
@@ -88,7 +88,7 @@ export default function Dashboard() {
                             <div className="m-5 flex flex-col items-center">
                                 <p className="font-sans text-center text-lg font-medium"> Placeholder 3 <br /></p>
                                 <p className="font-sans text-center italic">Created on: <span className='text-red-800'>date</span> </p> 
-                                <button className="cursor-pointer mt-4 text-center bg-green-500 hover:bg-green-600 transition border border-3 rounded-lg h-10 w-30 min-w-30 text-white ">Use template</button>
+                                <button className="cursor-pointer mt-4 text-center bg-green-500 hover:bg-green-600 transition border border-3 rounded-lg h-10 w-30 min-w-30 text-white dark:border-green-700/30">Use template</button>
 
                             </div>
                         </div>                      
