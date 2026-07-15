@@ -33,10 +33,17 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-               $project = Project::create([
-            'name' => $request->name,
-            'description' => $request->description,
+        $count = Project::count() + 1;
+
+        $project = Project::create([
+            'name' => "Untitled project {$count}",
+            'description' => '',
         ]);
+
+        return Inertia::render('Project/index', [
+                'project' => $project
+        ]);
+
     }
 
     /**
@@ -46,7 +53,7 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
                 return Inertia::render('Project/index', [
-            $project
+                'project' => $project
         ]);
 
     }
@@ -64,7 +71,18 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        //
+        
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string',
+            ]);
+
+            $project->update($validated);
+
+            return response()->json([
+                'message' => 'Project updated successfully.',
+            ]);
+
     }
 
     /**

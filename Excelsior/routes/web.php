@@ -11,6 +11,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('dashboard');
         Route::get('/project/{id}', [ProjectController::class, 'show'])
         ->name('project');
+        Route::patch('/project/{project}', [ProjectController::class, 'update']);
+        Route::post('/project', [ProjectController::class, 'store']);
 
 
 });
