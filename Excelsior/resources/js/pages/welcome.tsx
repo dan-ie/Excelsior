@@ -34,7 +34,7 @@ export default function Welcome() {
                                 </Link>
 
                                 <Link
-                                    href={login()}
+                                    href={register()}
                                     className="  inline-block rounded-lg border-2 border-[#FF964F] bg-[#FFA05F] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#FED8B1] hover:bg-[#FED0B1] dark:border-[#3E3E3A] dark:text-[#EDEDEC] dark:hover:border-[#62605b] dark:hover:text-[#1b1b18]"
                                 >
                                     Register
