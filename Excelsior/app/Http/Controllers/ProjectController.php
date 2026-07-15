@@ -21,9 +21,11 @@ class ProjectController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+         
+
+
     }
 
     /**
@@ -31,7 +33,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+               $project = Project::create([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
     }
 
     /**
