@@ -7,9 +7,16 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@font-face {
+font-family: 'Barlow';
+src: url("../fonts/Barlow-Regular.ttf") format("truetype");
+  format('ttf');
+  font-weight: 400;
+  font-style: normal;
+}
 @theme {
     --font-sans:
-        'Instrument Sans', ui-sans-serif, system-ui, sans-serif,
+        'Barlow','Instrument Sans', ui-sans-serif, system-ui, sans-serif,
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
         'Noto Color Emoji';
 
@@ -138,6 +145,9 @@
     }
 
     body {
-        @apply bg-background text-foreground;
+        @apply font-sans bg-background text-foreground ;
+        font-family:'Barlow', sans-serif;
+
+
     }
 }

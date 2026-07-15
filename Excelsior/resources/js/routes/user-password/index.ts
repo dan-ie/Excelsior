@@ -33,6 +33,38 @@ update.put = (options?: RouteQueryOptions): RouteDefinition<'put'> => ({
     method: 'put',
 })
 
+/**
+* @see \App\Http\Controllers\Settings\SecurityController::update
+* @see app/Http/Controllers/Settings/SecurityController.php:30
+* @route '/settings/password'
+*/
+const updateForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PUT',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\Settings\SecurityController::update
+* @see app/Http/Controllers/Settings/SecurityController.php:30
+* @route '/settings/password'
+*/
+updateForm.put = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: update.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PUT',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+update.form = updateForm
+
     /**
 * @see \App\Http\Controllers\Settings\SecurityController::update
  * @see app/Http/Controllers/Settings/SecurityController.php:30
