@@ -6,30 +6,22 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->string('name');
-            $table->text('description');
+        Schema::table('projects', function (Blueprint $table) {
             $table->foreignId('file_id')
                 ->nullable()
                 ->after('id')
                 ->constrained()
                 ->nullOnDelete();
-
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('projects');
+        Schema::table('projects', function (Blueprint $table) {
+            $table->dropForeign(['file_id']);
+            $table->dropColumn('file_id');
+        });
     }
 };
