@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from '@/components/ui/spinner';
 import InputError from '@/components/input-error';
 import { useState } from 'react';
+import { toast } from "sonner";
 
 
 export default function EmailContainer(){
@@ -25,16 +26,24 @@ const sendEmail = async () => {
      console.log("Button clicked");
 
     try {
-        const response = await axios.post("/email", emailData);
-
-        console.log(response.data);
+       await axios.post("/email", emailData);
 
     } catch (error) {
         console.error(error);
     }
+}
+const saveEmail = async () => {
+     console.log("Button clicked");
 
+    try {
+        const response = await axios.post("/email/create", emailData);
+        toast(response.data.message)
 
-};
+    } catch (error) {
+        console.error(error);
+    }
+}
+
     return(
         <>
         {/* Has to have an input for email body and subject line */}
@@ -74,6 +83,12 @@ const sendEmail = async () => {
              className="mt-6 bg-blue-400 text-white hover:bg-blue-300 hover:text-[#808080]"
               >
              Send Email
+         </Button>
+         <Button
+             onClick={saveEmail}
+             className="mt-6 bg-blue-400 text-white hover:bg-blue-300 hover:text-[#808080]"
+              >
+             Save Email
          </Button>
          </div>
     </div>

@@ -15,7 +15,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/project/{project}', [ProjectController::class, 'update']);
         Route::post('/project', [ProjectController::class, 'store']);
         Route::post('/email', [EmailController::class, 'send']);
-        Route::post('/emails', [EmailController::class, 'store']);
+        Route::post('/email/create', [EmailController::class, 'store']);
 
 
 });
