@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\EmailController;
 
 Route::inertia('/', 'welcome')->name('home');
 
@@ -13,6 +14,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('project');
         Route::patch('/project/{project}', [ProjectController::class, 'update']);
         Route::post('/project', [ProjectController::class, 'store']);
+        Route::post('/email', [EmailController::class, 'send']);
 
 
 });
