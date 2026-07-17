@@ -16,12 +16,6 @@ return new class extends Migration
             $table->timestamps();
             $table->string('name');
             $table->text('description');
-            $table->foreignId('file_id')
-                ->nullable()
-                ->after('id')
-                ->constrained()
-                ->nullOnDelete();
-
         });
     }
 
