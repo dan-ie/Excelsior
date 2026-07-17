@@ -16,6 +16,8 @@ type Props = {
 export default function Register({ passwordRules }: Props) {
     return (
         <>
+
+
             <Head title="Register" />
             <Form
                 {...store.form()}
@@ -92,7 +94,7 @@ export default function Register({ passwordRules }: Props) {
 
                             <Button
                                 type="submit"
-                                className="mt-2 w-full"
+                                className="mt-2 w-full bg-blue-600 text-white hover:bg-blue-400"
                                 tabIndex={5}
                                 data-test="register-user-button"
                             >
@@ -110,11 +112,13 @@ export default function Register({ passwordRules }: Props) {
                     </>
                 )}
             </Form>
-        </>
+
+       </>
     );
 }
 
 Register.layout = {
+
     title: 'Create an account',
     description: 'Enter your details below to create your account',
 };
