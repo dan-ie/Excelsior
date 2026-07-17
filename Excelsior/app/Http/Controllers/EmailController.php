@@ -16,6 +16,12 @@ class EmailController extends Controller
                 'subject'=> 'required|string|max:20',
                 'message' => 'required|string',
             ]);
+
+             Email::create([
+             'name' => $validated['to'],
+             'subject' => $validated['subject'],
+              'message' => $validated['message'],
+
             Mail::to($validated['to'])
             ->send(new ProjectEmail($validated));
 
