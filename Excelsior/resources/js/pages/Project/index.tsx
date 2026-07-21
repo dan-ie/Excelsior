@@ -1,5 +1,6 @@
 import EmailContainer from "./Components/EmailContainer";
 import FileContainer from "./Components/FileContainer";
+import CsvImport from "./Components/CsvImport";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -69,8 +70,13 @@ export default function ProjectDetails({project}:Props){
             </div>
             <div className="border p-5">
                 <FileContainer />
+
             </div>
         </div>
+        <div className="border p-5">
+                <CsvImport />
+
+            </div>
     </div>
     )
 }

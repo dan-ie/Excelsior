@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
+<<<<<<< Updated upstream
+=======
+use App\Http\Controllers\EmailController;
+use App\Http\Controllers\ImportController;
+>>>>>>> Stashed changes
 
 Route::inertia('/', 'welcome')->name('home');
 
@@ -13,6 +18,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('project');
         Route::patch('/project/{project}', [ProjectController::class, 'update']);
         Route::post('/project', [ProjectController::class, 'store']);
+<<<<<<< Updated upstream
+=======
+        Route::post('/email', [EmailController::class, 'send']);
+        Route::post('/email/create', [EmailController::class, 'store']);
+        Route::post('/import-csv', [ImportController::class, 'upload']);
+
+>>>>>>> Stashed changes
 
 
 });

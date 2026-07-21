@@ -18,7 +18,7 @@ export default function Dashboard({Projects}:Props) {
 
     return (
         <>
-        
+
             <Head title="Dashboard" />
             <div className='h-full flex flex-col'>
                 <div className="grid grid-cols-3 items-center relative overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border max-h-150 min-h-100 ml-4 mr-4 pb-4 pt-4">
@@ -39,21 +39,21 @@ export default function Dashboard({Projects}:Props) {
                     </button>
                     {Projects.map(f =>
                     <div className=" h-full flex flex-col relative  overflow-hidden rounded-xl border-2 border-sidebar-border/70 dark:border-sidebar-border">
-                        <div className="w-full flex justify-end"> 
+                        <div className="w-full flex justify-end">
                           <Link href={`/project/${f.id}`}
  className="cursor-pointer text-black hover:text-blue-500 bg-white w-10 h-10 m-2 align-right p-2 rounded-full transition">
                                 <EditIcon />
-                            </Link> 
+                            </Link>
                         </div>
-                        <div className="flex-1"> 
+                        <div className="flex-1">
                             <img className="w-full" src={placeholder}></img>
                         </div>
-                        <div className=" flex-1 flex flex-col justify-end"> 
+                        <div className=" flex-1 flex flex-col justify-end">
                             <hr className="border-1 border-gray:500"></hr>
                             <div className="m-5 flex flex-col items-center">
                                 <p className="font-sans text-center text-lg font-medium"> {f.name} <br /></p>
                                 <p className="font-sans text-center text-lg font-light"> {f.description} <br /></p>
-                                <p className="font-sans text-center italic">Created on: <span className='text-red-800'>{f.created_at}</span> </p> 
+                                <p className="font-sans text-center italic">Created on: <span className='text-red-800'>{f.created_at}</span> </p>
                                 <button className="cursor-pointer mt-4 text-center bg-green-500 hover:bg-green-600 transition border border-3 rounded-lg h-10 w-30 min-w-30 text-white dark:border-green-700/30">Use template</button>
 
                             </div>
@@ -61,10 +61,10 @@ export default function Dashboard({Projects}:Props) {
                     </div>
                     )}
 
-                    
 
 
-                    
+
+
                 </div>
             </div>
 
