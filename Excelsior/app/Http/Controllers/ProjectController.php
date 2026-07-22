@@ -23,7 +23,7 @@ class ProjectController extends Controller
      */
     public function create(Request $request)
     {
-         
+
 
 
     }
@@ -40,9 +40,8 @@ class ProjectController extends Controller
             'description' => '',
         ]);
 
-        return Inertia::render('Project/index', [
-                'project' => $project
-        ]);
+        return redirect('/dashboard');
+
 
     }
 
@@ -71,7 +70,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        
+
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
@@ -90,6 +89,8 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+       $project -> delete ();
+       return response()->json([
+                'success'=> true]);
     }
 }
