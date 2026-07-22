@@ -51,7 +51,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project, $id)
     {
-        $project = Project::findOrFail($id);
+            $project = Project::with('fields')->findOrFail($id);
                 return Inertia::render('Project/index', [
                 'project' => $project
         ]);

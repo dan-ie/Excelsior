@@ -12,4 +12,9 @@ class Project extends Model
         'name',
         'description',
     ];
+        public function fields()
+    {
+        return $this->hasMany(TemplateField::class);
+    }
+
 }
