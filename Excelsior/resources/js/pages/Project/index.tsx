@@ -20,13 +20,20 @@ export default function ProjectDetails({project}:Props){
             setFields([...fields, field]);
         };
 
-        const updateField = (id, changes) => {
-            setFields(fields.map(field =>
-                field.id === id
-                    ? { ...field, ...changes }
-                    : field
-            ));
-        };
+// create a variable to store the current project data or the data that's gonna be changed
+    const [projectMeta, setProjectMeta] = useState({
+        name: project.name,
+        description: project.description ?? '',
+        is_public: project.is_public
+    });
+    const [processing, setProcessing] = useState(false);
+// function to update the values of project.name and description when typing inside the input fields
+    const updateProjectMeta = (updates: Partial<typeof projectMeta>) => {
+        setProjectMeta((prev) => ({
+            ...prev,
+            ...updates,
+        }));
+    };
 
         const removeField = (id) => {
             setFields(fields.filter(field => field.id !== id));
@@ -99,10 +106,17 @@ export default function ProjectDetails({project}:Props){
                     className="w-full rounded-md border border-border bg-background p-2 text-sm text-foreground mt-1"
                 />
             </div>
+            <div> 
+            <input type='checkbox' checked={projectMeta.is_public ?? false} onChange={(e) => updateProjectMeta({is_public: e.target.checked})} className="w-4 h-4"></input>
+            <span className="ml-5">Make project public?</span>
+
+            </div>
+
             <Button onClick={onSave} disabled={processing} size="sm">
                 Save
             </Button>
         </div>
+
         <div className="grid grid-cols-2 p-5 gap-2">
             <div className="border p-5">
                 <EmailContainer projectId={project.id} />

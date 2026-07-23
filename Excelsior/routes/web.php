@@ -21,12 +21,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('project');
         Route::patch('/project/{project}', [ProjectController::class, 'update']);
         Route::post('/project', [ProjectController::class, 'store']);
+        Route::delete('/project-delete/{project}', [ProjectController::class, 'destroy']);
         Route::post('/email', [EmailController::class, 'send']);
         Route::post('/project/{project}/email-create', [EmailController::class, 'store']);
         Route::post('/import-csv', [ImportController::class, 'upload']);
         Route::post('/templates/{project}/fields', [TemplateFieldController::class, 'store']);
         Route::post('/projects/{project}/render', [TemplateGenerateController::class, 'render']);
         Route::post('/projects/{project}/file', [FileController::class, 'store']);
+
 
 
 

@@ -46,7 +46,7 @@ type Props ={
             }
         );
             // setHeaders(typeof response.data=='string' ? response.data.split(';') : response.data[0].split(';'));
-            setHeaders(response.data);
+            setHeaders(response.data[0].split(';'));
             setStatus("CSV upload successful");
 
         }

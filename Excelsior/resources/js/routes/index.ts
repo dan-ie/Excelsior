@@ -381,7 +381,7 @@ dashboard.form = dashboardForm
 
 /**
 * @see \App\Http\Controllers\ProjectController::project
-* @see app/Http/Controllers/ProjectController.php:52
+* @see app/Http/Controllers/ProjectController.php:54
 * @route '/project/{id}'
 */
 export const project = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -396,7 +396,7 @@ project.definition = {
 
 /**
 * @see \App\Http\Controllers\ProjectController::project
-* @see app/Http/Controllers/ProjectController.php:52
+* @see app/Http/Controllers/ProjectController.php:54
 * @route '/project/{id}'
 */
 project.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -423,7 +423,7 @@ project.url = (args: { id: string | number } | [id: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\ProjectController::project
-* @see app/Http/Controllers/ProjectController.php:52
+* @see app/Http/Controllers/ProjectController.php:54
 * @route '/project/{id}'
 */
 project.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -433,7 +433,7 @@ project.get = (args: { id: string | number } | [id: string | number ] | string |
 
 /**
 * @see \App\Http\Controllers\ProjectController::project
-* @see app/Http/Controllers/ProjectController.php:52
+* @see app/Http/Controllers/ProjectController.php:54
 * @route '/project/{id}'
 */
 project.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -443,7 +443,7 @@ project.head = (args: { id: string | number } | [id: string | number ] | string 
 
 /**
 * @see \App\Http\Controllers\ProjectController::project
-* @see app/Http/Controllers/ProjectController.php:52
+* @see app/Http/Controllers/ProjectController.php:54
 * @route '/project/{id}'
 */
 const projectForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -453,7 +453,7 @@ const projectForm = (args: { id: string | number } | [id: string | number ] | st
 
 /**
 * @see \App\Http\Controllers\ProjectController::project
-* @see app/Http/Controllers/ProjectController.php:52
+* @see app/Http/Controllers/ProjectController.php:54
 * @route '/project/{id}'
 */
 projectForm.get = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -463,7 +463,7 @@ projectForm.get = (args: { id: string | number } | [id: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\ProjectController::project
-* @see app/Http/Controllers/ProjectController.php:52
+* @see app/Http/Controllers/ProjectController.php:54
 * @route '/project/{id}'
 */
 projectForm.head = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

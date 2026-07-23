@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Auth;
 
 class ProjectController extends Controller
 {
@@ -13,9 +14,15 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return Inertia::render('dashboard', [
-            'Projects' => Project::query()->get()
-        ]);
+        $projects = Project::where('is_public', true)
+                ->orWhere('user_id', Auth::id())
+                ->with('user:id,name') // include creator info
+                ->latest()
+                ->get();
+
+            return Inertia::render('dashboard', [
+                'Projects' => $projects,
+            ]);
     }
 
     /**
@@ -23,7 +30,7 @@ class ProjectController extends Controller
      */
     public function create(Request $request)
     {
-         
+
 
 
     }
@@ -37,12 +44,16 @@ class ProjectController extends Controller
 
         $project = Project::create([
             'name' => "Untitled project {$count}",
-            'description' => '',
+            'description' => 'Enter description here',
+            'user_id' => Auth::id(),
+            'is_public' => $request->input('is_public', false),
         ]);
+        $project->load('fields');
 
         return Inertia::render('Project/index', [
                 'project' => $project
         ]);
+
 
     }
 
@@ -71,10 +82,11 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        
+
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
+                'is_public' => 'boolean'
             ]);
 
             $project->update($validated);
@@ -90,6 +102,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+       $project -> delete ();
+       return response()->json([
+                'success'=> true]);
     }
+
 }

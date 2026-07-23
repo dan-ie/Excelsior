@@ -18,6 +18,6 @@ export type TemplateField = {
 export type Project = {
     id: number,
     name: string,
-    description: string | '',
-    fields: TemplateField
+    description: string | ''
+    is_public: boolean | false
 }
