@@ -6,8 +6,10 @@ import InputError from '@/components/input-error';
 import { useState } from 'react';
 import { toast } from "sonner";
 
-
-export default function EmailContainer(){
+type Props = {
+    projectId: number;
+}
+export default function EmailContainer({projectId}:Props){
 
  const [emailData, setEmailData] = useState({
     to: "",
@@ -36,7 +38,7 @@ const saveEmail = async () => {
      console.log("Button clicked");
 
     try {
-        const response = await axios.post("/email/create", emailData);
+        const response = await axios.post(`/project/${projectId}/email-create`, emailData);
         toast(response.data.message)
 
     } catch (error) {

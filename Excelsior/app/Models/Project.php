@@ -11,10 +11,17 @@ class Project extends Model
     protected $fillable = [
         'name',
         'description',
+        'email_id'
     ];
         public function fields()
     {
         return $this->hasMany(TemplateField::class);
+    }
+    public function file(){
+    return $this->belongsTo(File::class);
+    }
+    public function emailTemplate(){
+    return $this->belongsTo(Email::class,'email_id');
     }
 
 }

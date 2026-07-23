@@ -1,12 +1,18 @@
+type FieldSettings = {
+    color?: string;
+    fontSize?: number;
+    fontWeight?: string;
+    textAlign?: string;
+};
 
-type TemplateField = {
+export type TemplateField = {
     id: number;
     name: string;
     x: number;
     y: number;
     width: number;
     height: number;
-    settings: {};
+    settings: FieldSettings;
 };
 
 export type Project = {
