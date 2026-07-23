@@ -6,6 +6,9 @@ use App\Models\File;
 use App\Models\Project;
 
 use Illuminate\Http\Request;
+use Spatie\PdfToImage\Pdf;
+use Illuminate\Support\Facades\Storage;
+
 
 class FileController extends Controller
 {
@@ -32,27 +35,44 @@ class FileController extends Controller
     {   
         if ($request->file('file')) {
             $file = $request->file('file');
-            $path = $file -> store('uploads', 'public');
+            $extension = strtolower($file->getClientOriginalExtension());
+            $path = $file->store('uploads', 'public');
+            $thumbnailPath = $path;
+
+            if ($extension === 'pdf') {
+                $thumbnailFilename = 'uploads/thumb_' . uniqid() . '.jpg';
+
+                // Use Laravel's disk path resolver for clean Windows paths
+                $pdfFullPath = Storage::disk('public')->path($path);
+                $thumbFullPath = Storage::disk('public')->path($thumbnailFilename);
+
+                $pdf = new Pdf($pdfFullPath);
+                $pdf->save($thumbFullPath);
+
+                $thumbnailPath = $thumbnailFilename;
+            }
+
             $fileArray = File::create([
-                'name' => $file -> getClientOriginalName(),
-                'type' => $file -> getClientMimeType(),
-                'size' => $file -> getSize(),
+                'name' => $file->getClientOriginalName(),
+                'type' => $file->getClientMimeType(),
+                'size' => $file->getSize(),
                 'path' => $path,
+                'thumbnail_path' => $thumbnailPath,
             ]);
+
             $project->update([
-                    'file_id' => $fileArray->id,
+                'file_id' => $fileArray->id,
             ]);
 
             return response()->json([
                 'success' => true,
                 'message' => 'upload successful',
                 'file' => $fileArray, 
-                'url' => asset('storage/' . $path)
+                'url' => asset('storage/' . $thumbnailPath)
             ], 201);
         }
 
         return response()->json(['error' => 'file not provided'], 400);
-        
     }
 
     /**

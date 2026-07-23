@@ -15,7 +15,8 @@ class Project extends Model
         'user_id',
         'is_public',
         'file_id',
-        'email_id'
+        'email_id',
+        'file_id'
         
     ];
         protected $casts = [
@@ -44,7 +45,7 @@ class Project extends Model
     }
     
     public function file(){
-    return $this->belongsTo(File::class);
+    return $this->belongsTo(File::class, 'file_id','id');
     }
     public function emailTemplate(){
     return $this->belongsTo(Email::class,'email_id');

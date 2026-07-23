@@ -20,4 +20,6 @@ export type Project = {
     name: string,
     description: string | ''
     is_public: boolean | false
+    file_id: number
+    image_url?: string | null
 }
