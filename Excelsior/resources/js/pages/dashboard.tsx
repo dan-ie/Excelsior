@@ -69,7 +69,7 @@ export default function Dashboard({Projects}:Props) {
                           </Link>
                         </div>
                         <div className="flex-1">
-                            <img className="w-full" src={placeholder}></img>
+                            <img className="w-full h-48 object-contain" src={f.image_url ? f.image_url : placeholder} alt={f.name} />
                         </div>
                         <div className=" flex-1 flex flex-col justify-end">
                             <hr className="border-1 border-gray:500"></hr>

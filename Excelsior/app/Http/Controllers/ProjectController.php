@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -15,14 +16,23 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::where('is_public', true)
-                ->orWhere('user_id', Auth::id())
-                ->with('user:id,name') // include creator info
-                ->latest()
-                ->get();
+            ->orWhere('user_id', Auth::id())
+            ->with(['user:id,name', 'file']) // include creator info
+            ->latest()
+            ->get()
+            ->map(function ($project) {
+                if ($project->file) {
+                    $path = $project->file->thumbnail_path ?: $project->file->path;
+                    $project->image_url = asset('storage/' . $path);
+                } else {
+                    $project->image_url = null;
+                }
+                return $project;
+            });
 
-            return Inertia::render('dashboard', [
-                'Projects' => $projects,
-            ]);
+        return Inertia::render('dashboard', [
+            'Projects' => $projects,
+        ]);
     }
 
     /**
