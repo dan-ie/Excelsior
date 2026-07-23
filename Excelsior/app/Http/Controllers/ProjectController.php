@@ -39,8 +39,11 @@ class ProjectController extends Controller
             'name' => "Untitled project {$count}",
             'description' => '',
         ]);
+        $project->load('fields');
 
-        return redirect('/dashboard');
+        return Inertia::render('Project/index', [
+                'project' => $project
+        ]);
 
 
     }
