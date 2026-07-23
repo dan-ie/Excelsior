@@ -15,24 +15,9 @@ class Project extends Model
         'user_id',
         'is_public'
     ];
-
-    protected $casts = [
-            'is_public' => 'boolean', //makes php version boolean
-        ];
-
-    public function user(): BelongsTo
+        public function fields()
     {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(TemplateField::class);
     }
 
-    public function scopeVisibleTo(Builder $query, ?int $userId = null): Builder
-    {
-        $userId = $userId ?? Auth::id();
-
-        return $query->where('is_public', false)
-                    ->orWhere(function (Builder $q) use ($userId) {
-                        $q->where('is_public', true)
-                        ->where('user_id', $userId);
-                    });
-    }
 }

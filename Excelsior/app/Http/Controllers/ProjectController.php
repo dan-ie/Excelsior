@@ -30,7 +30,9 @@ class ProjectController extends Controller
      */
     public function create(Request $request)
     {
-         
+
+
+
     }
 
     /**
@@ -46,10 +48,12 @@ class ProjectController extends Controller
             'user_id' => Auth::id(),
             'is_public' => $request->input('is_public', false),
         ]);
+        $project->load('fields');
 
         return Inertia::render('Project/index', [
                 'project' => $project
         ]);
+
 
     }
 
@@ -58,7 +62,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project, $id)
     {
-        $project = Project::findOrFail($id);
+            $project = Project::with('fields')->findOrFail($id);
                 return Inertia::render('Project/index', [
                 'project' => $project
         ]);
@@ -78,7 +82,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, Project $project)
     {
-        
+
             $validated = $request->validate([
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string',
@@ -98,7 +102,9 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        //
+       $project -> delete ();
+       return response()->json([
+                'success'=> true]);
     }
 
 }
