@@ -1,8 +1,10 @@
 import axios from "axios";
 import {useState} from "react"
 
-
-export default function FileContainer(){
+type Props = {
+    projectId: number;
+}
+export default function FileContainer({projectId}:Props){
     const [file, setFile] = useState<any>(null)
     const [status, setStatus] = useState("")
 
@@ -25,7 +27,7 @@ export default function FileContainer(){
         try {
             setStatus("Uploading file")
 
-            const response = await axios.post("http://127.0.0.1:8000/api/upload", formData, {
+            const response = await axios.post(`/projects/${projectId}/file`, formData, {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 },

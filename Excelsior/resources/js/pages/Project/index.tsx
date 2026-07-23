@@ -108,7 +108,7 @@ export default function ProjectDetails({project}:Props){
                 <EmailContainer projectId={project.id} />
             </div>
             <div className="border p-5">
-                <FileContainer />
+                <FileContainer projectId={project.id} />
 
             </div>
         </div>

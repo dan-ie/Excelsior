@@ -6,6 +6,8 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ImportController;
 use App\Http\Controllers\TemplateFieldController;
 use App\Http\Controllers\TemplateGenerateController;
+use App\Http\Controllers\FileController;
+
  
 
 
@@ -24,6 +26,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/import-csv', [ImportController::class, 'upload']);
         Route::post('/templates/{project}/fields', [TemplateFieldController::class, 'store']);
         Route::post('/projects/{project}/render', [TemplateGenerateController::class, 'render']);
+        Route::post('/projects/{project}/file', [FileController::class, 'store']);
+
 
 
 });
