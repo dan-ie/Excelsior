@@ -11,7 +11,8 @@ class Project extends Model
     protected $fillable = [
         'name',
         'description',
-        'email_id'
+        'email_id',
+        'project_id'
     ];
         public function fields()
     {
