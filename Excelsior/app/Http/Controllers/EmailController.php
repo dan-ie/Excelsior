@@ -7,6 +7,8 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ProjectEmail;
 use App\Models\Email;
+use App\Models\Project;
+
 
 
 class EmailController extends Controller
@@ -32,7 +34,7 @@ class EmailController extends Controller
             ]);
 
     }
-            public function store(Request $request)
+            public function store(Request $request,Project $project)
     {
             $validated = $request->validate([
                 'to' => 'required|email',
@@ -40,11 +42,14 @@ class EmailController extends Controller
                 'message' => 'required|string',
             ]);
 
-             Email::create([
+             $emailTemplate = Email::create([
              'name' => $validated['to'],
              'subject' => $validated['subject'],
               'message' => $validated['message'],
              ]);
+                $project->update([
+                        'email_id' => $emailTemplate->id,
+                ]);
 
            return response()->json([
             'message' => 'Email saved successfully.',

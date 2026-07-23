@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\File;
+use App\Models\Project;
+
 use Illuminate\Http\Request;
 
 class FileController extends Controller
@@ -26,7 +28,7 @@ class FileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Project $project)
     {   
         if ($request->file('file')) {
             $file = $request->file('file');
@@ -37,6 +39,10 @@ class FileController extends Controller
                 'size' => $file -> getSize(),
                 'path' => $path,
             ]);
+            $project->update([
+                    'file_id' => $fileArray->id,
+            ]);
+
             return response()->json([
                 'success' => true,
                 'message' => 'upload successful',

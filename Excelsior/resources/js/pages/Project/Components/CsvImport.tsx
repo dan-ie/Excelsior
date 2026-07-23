@@ -1,11 +1,16 @@
 import axios from "axios";
 import {useState} from "react"
-
-
- export default function CsvImport() {
+import {TemplateField } from '@/types/project'
+type Props ={
+    fields: TemplateField[];
+    projectId: number;
+}
+ export default function CsvImport({fields,projectId}:Props) {
     const [file, setFile] = useState<File | null>(null);
     const [headers, setHeaders] = useState<string[]>([]);
+    const [recipientColumn, setRecipientColumn] = useState("");
     const [status, setStatus] = useState("");
+        const formData = new FormData();
 
     const [mapping, setMapping] = useState<Record<string, string>>({});
 
@@ -30,8 +35,7 @@ import {useState} from "react"
             return
         }
 
-        const formData = new FormData();
-        formData.append("csv_file", selectedFile);
+        formData.append("file", selectedFile);
         try {
             setStatus("Reading CSV...")
 
@@ -51,18 +55,30 @@ import {useState} from "react"
         }
     };
 
-const updateMapping = (csvColumn: string, field: string) => {
-    setMapping((prev) => ({
-        ...prev,
-        [csvColumn]: field,
-    }));
-};
-const saveMapping =( ) => {
-    console.log(mapping);
-    setStatus("Mapping saved");
-    };
+    const updateMapping = (csvColumn: string, fieldId: number) => {
 
-console.log(headers);
+        setMapping((prev) => {
+            const updated = {
+                ...prev,
+                [fieldId]: csvColumn,
+            };
+
+            return updated;
+        });
+    };
+    const saveMapping = () => {
+        formData.set(
+            "mapping",
+            JSON.stringify(mapping)
+        );
+        formData.set("recipientColumn", recipientColumn);
+
+        axios.post(`/projects/${projectId}/render`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+    };
 
 return (
  <div className="flex flex-col items-center gap-2 w-full">
@@ -83,6 +99,19 @@ return (
 
             {headers.length > 0 && (
                  <div>
+                <h3>Email Recipient Column</h3>
+                <select
+                    value={recipientColumn}
+                    onChange={(e) => setRecipientColumn(e.target.value)}
+                >
+                    <option value="">Select recipient column</option>
+
+                    {headers.map((header) => (
+                        <option key={header} value={header}>
+                            {header}
+                        </option>
+                    ))}
+                </select>
                  <h3>CSV Columns:</h3>
                  {headers.map((header) =>(
                      <div
@@ -94,7 +123,6 @@ return (
                      </p>
                       <select
                       className="border rounded p-2"
-                      value={mapping[header] || ""}
                       onChange={(e) =>
                           updateMapping(
                               header,
@@ -104,11 +132,11 @@ return (
                      <option value="">
                      Select field
                      </option>
-
-                     {certificateFields.map((field) => (
-                         <option key={field} value={field}
+                    
+                     {fields.map((field) => (
+                         <option key={field.id} value={field.id}
                          >
-                         {field}
+                         {field.name}
                          </option>
                          ))}
 

@@ -11,4 +11,9 @@ class Email extends Model
         'subject',
         'message',
     ];
+        public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+
 }

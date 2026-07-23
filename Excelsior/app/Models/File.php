@@ -7,4 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class File extends Model
 {
     protected $fillable = ['name', 'type', 'size', 'path'];
+
+    public function project(){
+        return $this->hasOne(Project::class);
+    }
+
 }

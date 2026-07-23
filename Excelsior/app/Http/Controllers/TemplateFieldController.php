@@ -28,34 +28,41 @@ class TemplateFieldController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, Project $project)
-    {
-
-    //     $data = $request->all();
-
-    //    $project->fields()->createMany($data);
-foreach ($request->all() as $field) {
-    $project->fields()->updateOrCreate(
-            [
-                'id' => $field['id'],
-            ],
-            [
-                'name' => $field['name'],
-                'x' => $field['x'],
-                'y' => $field['y'],
-                'width' => $field['width'],
-                'height' => $field['height'],
-                'settings' => $field['settings'] ?? null,
-            ]
-        );
+  public function store(Request $request, Project $project)
+{
+    // Delete removed fields
+    if (!empty($request->deletedFieldIds)) {
+        $project->fields()
+            ->whereIn('id', $request->deletedFieldIds)
+            ->delete();
     }
-        $project->load('fields');
 
-        return response()->json([
-            'fields' => $project->fields,
-        ]);
+    // Update existing / create new fields
+    foreach ($request->fields as $field) {
 
+        if (!empty($field['id'])) {
+            $project->fields()->updateOrCreate(
+                ['id' => $field['id']],
+                [
+                    'name' => $field['name'],
+                    'x' => $field['x'],
+                    'y' => $field['y'],
+                    'width' => $field['width'],
+                    'height' => $field['height'],
+                    'settings' => $field['settings'] ?? [],
+                ]
+            );
+        } else {
+            $project->fields()->create($field);
+        }
     }
+
+    $project->load('fields');
+
+    return response()->json([
+        'fields' => $project->fields
+    ]);
+}
 
     /**
      * Display the specified resource.

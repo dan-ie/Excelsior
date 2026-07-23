@@ -13,6 +13,8 @@ type Props = {
 };
 
 export default function ProjectDetails({project}:Props){
+    const [selectedField, setSelectedField] = useState<number | null>(null);
+    const [deletedFieldIds, setDeletedFieldIds] = useState([]);
     const [fields, setFields] = useState(project.fields);
     const addField = (field) => {
             setFields([...fields, field]);
@@ -35,6 +37,11 @@ export default function ProjectDetails({project}:Props){
 
         const removeField = (id) => {
             setFields(fields.filter(field => field.id !== id));
+                setDeletedFieldIds(prev => [
+                ...prev,
+                id
+                ]);
+
         };
     // create a variable to store the current project data or the data that's gonna be changed
         const [projectMeta, setProjectMeta] = useState({
@@ -50,9 +57,11 @@ export default function ProjectDetails({project}:Props){
             }));
         };
          const saveFields= () => {
-            axios.post(`/templates/${project.id}/fields`,fields)
+            axios.post(`/templates/${project.id}/fields`,{fields,deletedFieldIds})
                 .then(response => {
         setFields(response.data.fields);
+            setDeletedFieldIds([]);
+
     });
         }
         const moveField = (id: number, x: number, y: number) => {
@@ -110,10 +119,10 @@ export default function ProjectDetails({project}:Props){
 
         <div className="grid grid-cols-2 p-5 gap-2">
             <div className="border p-5">
-                <EmailContainer />
+                <EmailContainer projectId={project.id} />
             </div>
             <div className="border p-5">
-                <FileContainer />
+                <FileContainer projectId={project.id} />
 
             </div>
         </div>
@@ -121,14 +130,17 @@ export default function ProjectDetails({project}:Props){
             <FieldCreator    
             fields={fields}
             addField={addField}
+            selectedField={selectedField}
+            setSelectedField={setSelectedField}
             updateField={updateField}
             removeField={removeField}
             moveField={moveField}
             saveFields={saveFields}
+            setDeletedFieldIds={setDeletedFieldIds}
         />
         </div>
         <div className="border p-5">
-                <CsvImport />
+                <CsvImport fields={fields} projectId={project.id} />
 
             </div>
     </div>

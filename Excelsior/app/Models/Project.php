@@ -19,5 +19,11 @@ class Project extends Model
     {
         return $this->hasMany(TemplateField::class);
     }
+    public function file(){
+    return $this->belongsTo(File::class);
+    }
+    public function emailTemplate(){
+    return $this->belongsTo(Email::class,'email_id');
+    }
 
 }
