@@ -34,7 +34,13 @@ export default function ProjectDetails({project}:Props){
             ...updates,
         }));
     };
-
+const updateField = (id, changes) => {
+            setFields(fields.map(field =>
+                field.id === id
+                    ? { ...field, ...changes }
+                    : field
+            ));
+        };
         const removeField = (id) => {
             setFields(fields.filter(field => field.id !== id));
                 setDeletedFieldIds(prev => [
@@ -42,19 +48,6 @@ export default function ProjectDetails({project}:Props){
                 id
                 ]);
 
-        };
-    // create a variable to store the current project data or the data that's gonna be changed
-        const [projectMeta, setProjectMeta] = useState({
-            name: project.name,
-            description: project.description ?? '',
-        });
-        const [processing, setProcessing] = useState(false);
-    // function to update the values of project.name and description when typing inside the input fields
-        const updateProjectMeta = (updates: Partial<typeof projectMeta>) => {
-            setProjectMeta((prev) => ({
-                ...prev,
-                ...updates,
-            }));
         };
          const saveFields= () => {
             axios.post(`/templates/${project.id}/fields`,{fields,deletedFieldIds})
