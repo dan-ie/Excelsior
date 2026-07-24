@@ -6,6 +6,7 @@ use App\Services\Renderers\RendererManager;
 use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Jobs\RenderProjectJob;
+use Illuminate\Support\Facades\Bus;
 
 
 class TemplateGenerateController extends Controller

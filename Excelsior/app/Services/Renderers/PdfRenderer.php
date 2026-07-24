@@ -52,28 +52,28 @@ class PdfRenderer
             $pdf->setSourceFile($templatePath);
 
             $template = $pdf->importPage(1);
+            $size = $pdf->getTemplateSize($template);
 
-            $pdf->AddPage();
-
+            $pdf->AddPage($size['orientation'], [$size['width'], $size['height']]);
             $pdf->useTemplate($template);
 
 
             foreach ($project->fields as $field) {
 
                 $column = $mapping[$field->id] ?? null;
-                $email = $row[$recipientColumn];
+                $email = $row[$recipientColumn]; 
                 if (!$column) {
                     continue;
                 }
 
                 $value = $row[$column] ?? '';
 
-                $pdf->SetFont('Arial', '', 14);
+                $pdf->SetFont('Arial', '', $field->settings['fontSize'] ?? 14);
 
                 $pdf->SetXY(
-                        $field->x * $scaleX,
-                        $field->y * $scaleY
-                    );
+                    $field->x * $size['width'],
+                    $field->y * $size['height']
+                );
                 $pdf->Write(1, $value);
             }
 

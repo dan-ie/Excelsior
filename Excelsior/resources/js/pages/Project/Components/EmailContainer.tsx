@@ -5,16 +5,19 @@ import { Spinner } from '@/components/ui/spinner';
 import InputError from '@/components/input-error';
 import { useState } from 'react';
 import { toast } from "sonner";
-
+type Email = {
+    subject: string;
+    message: string;
+}
 type Props = {
     projectId: number;
+    emailTemplate: Email;
 }
-export default function EmailContainer({projectId}:Props){
+export default function EmailContainer({emailTemplate, projectId}:Props){
 
  const [emailData, setEmailData] = useState({
-    to: "",
-    subject: "",
-    message: "",
+    subject: emailTemplate.subject ?? '',
+    message: emailTemplate.message ?? "",
 });
 
 const [processing, setProcessing] = useState(false);
@@ -24,18 +27,8 @@ const updateEmailData = (updates: Partial<typeof emailData>) => {
         ...updates,
     }));
 };
-const sendEmail = async () => {
-     console.log("Button clicked");
 
-    try {
-       await axios.post("/email", emailData);
-
-    } catch (error) {
-        console.error(error);
-    }
-}
 const saveEmail = async () => {
-     console.log("Button clicked");
 
     try {
         const response = await axios.post(`/project/${projectId}/email-create`, emailData);
@@ -53,14 +46,6 @@ const saveEmail = async () => {
     <div className="py-3 space-y-6">
         <div className="text-[#303131] dark:text-[#D3D4D4] text-center">Email Composer</div>
           <br />
-            <div className="flex items-center">
-                <label className="w-16" >To:</label>
-                <Input
-                    value={emailData.to}
-                    onChange={(e) => updateEmailData({ to: e.target.value })}
-                    placeholder="email@example.com"
-                />
-            </div>
 
             <div>
                 <Input
@@ -80,12 +65,7 @@ const saveEmail = async () => {
                 />
             </div>
          <div className="flex justify-center mt-5 ">
-         <Button
-             onClick={sendEmail}
-             className="mt-6 bg-blue-400 text-white hover:bg-blue-300 hover:text-[#808080]"
-              >
-             Send Email
-         </Button>
+         
          <Button
              onClick={saveEmail}
              className="mt-6 bg-blue-400 text-white hover:bg-blue-300 hover:text-[#808080]"

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import placeholder from "@/assets/placeholder-image.png";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -38,6 +38,7 @@ export type TemplateField = {
 };
 
 type Props = {
+thumbnail: string;
   fields: TemplateField[];
   addField: (f: TemplateField) => void;
   setSelectedField: (id: number | null) => void;
@@ -52,6 +53,7 @@ type Props = {
 const FONT_FAMILIES = ["Inter", "Georgia", "Times New Roman", "Courier New", "Arial", "Helvetica"];
 
 export default function FieldCreator({
+    thumbnail,
   fields,
   addField,
   setSelectedField,
@@ -63,6 +65,8 @@ export default function FieldCreator({
 }: Props) {
   const [dragging, setDragging] = useState<number | null>(null);
 
+    const canvasRef = useRef<HTMLDivElement>(null);
+
   const current = fields.find((f) => f.id === selectedField);
   const s: FieldSettings = current?.settings ?? {};
 
@@ -70,6 +74,7 @@ export default function FieldCreator({
     if (!selectedField || !current) return;
     updateField(selectedField, { settings: { ...current.settings, ...patch } });
   };
+
 
   return (
     <div className="min-h-screen bg-background p-6">
@@ -86,23 +91,23 @@ export default function FieldCreator({
                 variant="outline"
                 size="sm"
                 onClick={() =>
-                  addField({
+                    addField({
                     id: Date.now(),
                     name: "Recipient Name",
-                    x: 100,
-                    y: 100,
-                    width: 200,
-                    height: 40,
+                    x: 0.15,
+                    y: 0.1,
+                    width: 0.25,
+                    height: 0.035,
                     settings: {
-                      color: "#111111",
-                      fontSize: 18,
-                      fontFamily: "Inter",
-                      fontWeight: "normal",
-                      textAlign: "left",
+                        color: "#111111",
+                        fontSize: 18,
+                        fontFamily: "Inter",
+                        fontWeight: "normal",
+                        textAlign: "left",
                     },
-                  })
-                }
-              >
+                    })
+                }             
+                 >
                 <Plus className="mr-1.5 h-4 w-4" /> Add field
               </Button>
               <Button size="sm" onClick={saveFields}>
@@ -112,21 +117,26 @@ export default function FieldCreator({
           </div>
 
           <div
+            ref={canvasRef}
             className="relative select-none bg-muted/30"
             style={{ aspectRatio: " 1 / 1.414" }}
             onMouseMove={(e) => {
-              if (dragging === null) return;
-              const rect = e.currentTarget.getBoundingClientRect();
-              moveField(dragging, e.clientX - rect.left, e.clientY - rect.top);
+              if (dragging === null || !canvasRef.current) return;
+              const rect = canvasRef.current.getBoundingClientRect();
+              const fx = (e.clientX - rect.left) / rect.width;
+              const fy = (e.clientY - rect.top) / rect.height;
+              const clampedX = Math.min(Math.max(fx, 0), 1);
+              const clampedY = Math.min(Math.max(fy, 0), 1);
+              moveField(dragging, clampedX, clampedY);
             }}
             onMouseUp={() => setDragging(null)}
             onMouseLeave={() => setDragging(null)}
             onClick={() => setSelectedField(null)}
           >
             <img
-              src={placeholder}
+              src={'/storage/' + thumbnail}
               alt="Template background"
-              className="pointer-events-none absolute inset-0 h-full w-full object-contain"
+              className="pointer-events-none absolute inset-0 h-full w-full"
             />
 
             {fields.map((field) => {
@@ -144,10 +154,10 @@ export default function FieldCreator({
                     isSelected ? "ring-2 ring-primary shadow-lg" : "ring-1 ring-border/60 hover:ring-primary/50"
                   }`}
                   style={{
-                    left: field.x + 'px',
-                    top: field.y + 'px',
-                    width: field.width +'px',
-                    height: field.height + 'px',
+                    left: `${field.x * 100}%`,
+                    top: `${field.y * 100}%`,
+                    width: `${field.width * 100}%`,
+                    height: `${field.height * 100}%`,
                     color: field.settings.color ?? "#000",
                     fontSize: field.settings.fontSize ?? 14,
                     fontFamily: field.settings.fontFamily ?? "Inter",

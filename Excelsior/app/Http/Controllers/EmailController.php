@@ -37,13 +37,11 @@ class EmailController extends Controller
             public function store(Request $request,Project $project)
     {
             $validated = $request->validate([
-                'to' => 'required|email',
                 'subject'=> 'required|string|max:20',
                 'message' => 'required|string',
             ]);
 
              $emailTemplate = Email::create([
-             'name' => $validated['to'],
              'subject' => $validated['subject'],
               'message' => $validated['message'],
              ]);

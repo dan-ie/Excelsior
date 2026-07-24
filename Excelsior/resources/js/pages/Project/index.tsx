@@ -19,7 +19,7 @@ export default function ProjectDetails({project}:Props){
     const addField = (field) => {
             setFields([...fields, field]);
         };
-
+console.log(project);
 // create a variable to store the current project data or the data that's gonna be changed
     const [projectMeta, setProjectMeta] = useState({
         name: project.name,
@@ -79,11 +79,11 @@ const updateField = (id, changes) => {
             }
             setProcessing(false);
         };
-    return(
-    <div className="p-5">
-        <div className="min-w-0 flex-1 space-y-3">
+   return(
+    <div className="p-6 max-w-5xl mx-auto space-y-8">
+        <div className="min-w-0 flex-1 space-y-4 bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
             <div>
-                <label className="text-xs font-medium text-muted-foreground">project Name</label>
+                <label className="text-xs font-medium text-muted-foreground">Project Name</label>
                 <Input
                     value={projectMeta.name}
                     onChange={(e) => updateProjectMeta({ name: e.target.value })}
@@ -96,46 +96,51 @@ const updateField = (id, changes) => {
                     value={projectMeta.description ?? ''}
                     onChange={(e) => updateProjectMeta({ description: e.target.value })}
                     rows={2}
-                    className="w-full rounded-md border border-border bg-background p-2 text-sm text-foreground mt-1"
+                    className="w-full rounded-md border border-border bg-background p-2 text-sm text-foreground mt-1 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition-shadow"
                 />
             </div>
-            <div> 
-            <input type='checkbox' checked={projectMeta.is_public ?? false} onChange={(e) => updateProjectMeta({is_public: e.target.checked})} className="w-4 h-4"></input>
-            <span className="ml-5">Make project public?</span>
-
-            </div>
+            <label className="flex items-center gap-2 cursor-pointer w-fit">
+                <input
+                    type='checkbox'
+                    checked={projectMeta.is_public ?? false}
+                    onChange={(e) => updateProjectMeta({ is_public: e.target.checked })}
+                    className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-400"
+                />
+                <span className="text-sm text-foreground">Make project public?</span>
+            </label>
 
             <Button onClick={onSave} disabled={processing} size="sm">
                 Save
             </Button>
         </div>
 
-        <div className="grid grid-cols-2 p-5 gap-2">
-            <div className="border p-5">
-                <EmailContainer projectId={project.id} />
+        <div className="grid grid-cols-2 gap-4">
+            <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
+                <EmailContainer emailTemplate={project.email_template} projectId={project.id} />
             </div>
-            <div className="border p-5">
-                <FileContainer projectId={project.id} />
-
+            <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
+                <FileContainer projectId={project.id} existingFile={project.file} />
             </div>
         </div>
-        <div>
-            <FieldCreator    
-            fields={fields}
-            addField={addField}
-            selectedField={selectedField}
-            setSelectedField={setSelectedField}
-            updateField={updateField}
-            removeField={removeField}
-            moveField={moveField}
-            saveFields={saveFields}
-            setDeletedFieldIds={setDeletedFieldIds}
-        />
-        </div>
-        <div className="border p-5">
-                <CsvImport fields={fields} projectId={project.id} />
 
-            </div>
+        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
+            <FieldCreator
+                thumbnail={project.file.thumbnail_path}
+                fields={fields}
+                addField={addField}
+                selectedField={selectedField}
+                setSelectedField={setSelectedField}
+                updateField={updateField}
+                removeField={removeField}
+                moveField={moveField}
+                saveFields={saveFields}
+                setDeletedFieldIds={setDeletedFieldIds}
+            />
+        </div>
+
+        <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
+            <CsvImport fields={fields} projectId={project.id} />
+        </div>
     </div>
     )
 }

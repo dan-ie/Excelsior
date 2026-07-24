@@ -15,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $projects = Project::where('is_public', true)
+        $projects = Project::with('fields')->where('is_public', true)
             ->orWhere('user_id', Auth::id())
             ->with(['user:id,name', 'file']) // include creator info
             ->latest()
@@ -72,7 +72,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project, $id)
     {
-            $project = Project::with('fields')->findOrFail($id);
+            $project = Project::with('fields','file','emailTemplate')->findOrFail($id);
                 return Inertia::render('Project/index', [
                 'project' => $project
         ]);
