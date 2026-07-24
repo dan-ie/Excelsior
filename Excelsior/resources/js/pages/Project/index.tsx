@@ -2,6 +2,7 @@ import EmailContainer from "./Components/EmailContainer";
 import FileContainer from "./Components/FileContainer";
 import CsvImport from "./Components/CsvImport";
 import { Input } from "@/components/ui/input";
+import placeholder from "@/assets/placeholder-image.png";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
@@ -13,6 +14,11 @@ type Props = {
 };
 
 export default function ProjectDetails({project}:Props){
+    const defaultEmailTemplate = {
+        subject: '',
+        message: ''
+
+    }
     const [selectedField, setSelectedField] = useState<number | null>(null);
     const [deletedFieldIds, setDeletedFieldIds] = useState([]);
     const [fields, setFields] = useState(project.fields);
@@ -116,7 +122,7 @@ const updateField = (id, changes) => {
 
         <div className="grid grid-cols-2 gap-4">
             <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
-                <EmailContainer emailTemplate={project.email_template} projectId={project.id} />
+                <EmailContainer emailTemplate={project.email_template ?? defaultEmailTemplate} projectId={project.id} />
             </div>
             <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
                 <FileContainer projectId={project.id} existingFile={project.file} />
@@ -125,8 +131,7 @@ const updateField = (id, changes) => {
 
         <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
             <FieldCreator
-                thumbnail={project.file.thumbnail_path}
-                fields={fields}
+                thumbnail={project.file?.thumbnail_path ?? '/assets/placeholder-image.png'}                fields={fields}
                 addField={addField}
                 selectedField={selectedField}
                 setSelectedField={setSelectedField}

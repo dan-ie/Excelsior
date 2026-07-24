@@ -137,6 +137,10 @@ export default function FieldCreator({
               src={'/storage/' + thumbnail}
               alt="Template background"
               className="pointer-events-none absolute inset-0 h-full w-full"
+                onError={(e) => {
+    e.currentTarget.src = placeholder;
+  }}
+
             />
 
             {fields.map((field) => {
